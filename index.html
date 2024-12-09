@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MPU FRAGEN UND ANTWORTEN</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+        .container {
+            display: flex;
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .questions {
+            flex: 1;
+            min-width: 300px;
+            height: 90vh;
+            overflow-y: auto;
+        }
+        .answers {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            height: 90vh;
+            overflow-y: auto;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 8px;
+            border: none;
+            background: #0066cc;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: left;
+            font-size: 14px;
+        }
+        button:hover {
+            background: #0052a3;
+        }
+        .search-box {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            .questions, .answers {
+                height: auto;
+                max-height: 50vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="questions">
+            <input type="text" class="search-box" id="searchBox" placeholder="Suchen Sie die Fragen..." onkeyup="searchQuestions()">
+            <div id="questionsList">
+                <!-- Întrebările vor fi adăugate prin JavaScript -->
+            </div>
+        </div>
+        <div class="answers" id="answerBox">
+            <p>Wählen Sie eine Frage um die Antwort zu sehen...</p>
+        </div>
+    </div>
+
+    <script>
+        const qa_data = [
+            {
+                "question": "Warum kommen Sie zur MPU?",
+                "answer": "Ich habe Fehler gemacht, habe mich nicht an die Regeln gehalten, bin betrunken aufgefallen. Ich habe meine Einstellung zum Alkohol und zum Straßenverkehr verändert und das will ich Ihnen heute zeigen!"
+            },
+            {
+                "question": "Was sagen Sie zu den Zweifeln der Behörde an ihrer Fahreignung? Was sagen Sie dazu dass Sie heute hier sind? Sind Sie einverstanden dass Sie heute hier sind?",
+                "answer": "Ich kann das verstehen, dass finde ich gerecht, weil ich unter Alkoholeinfluss gefahren bin und ganz klar, eine Gefahr wahr!"
+            },
+           
+            {
+                "question": "Warum haben wir so viele Regeln und Gesetze?",
+                "answer": "Man braucht Regeln. Sie schützen uns. Ich habe verstanden, dass ich sicher und in Frieden lebe, wenn ich mich an die Regeln halte. \nOhne Regeln versinkt die Gesellschaft in Chaos, es gibt nur Chaos. "
+            },
+            {
+                "question": "Sind sie ein sicherer Fahrer?  NEIN, sonst wäre ich nicht bei der MPU, denn richtig gute Autofahrer müssen nicht zur MPU!",
+                "answer": "Wie schätzen Sie sich als Fahrer damals ein?   \nIch war ein egoistischer Fahrer, ich dachte nur an mich selbst und nicht an die Folgen! Es tut mir leid!"
+            },
+            {
+                "question": "Was ist für Sie ein guter, normaler Autofahrer?",
+                "answer": "Ein guter Bürger und Autofahrer, der das Gesetz respektiert, an andere denkt und keine Gefahr mehr ist!  "
+            },
+            {
+                "question": "Wo liegt die relative und wo die absolute Fahruntauglichkeitsgrenze? Bei 0,3 und 1,1 Promille!",
+                "answer": "Wie viele Personen müssen jährlich zur MPU? Bei 90.000 Personen im Jahr 2019 wegen Alkohol 40 %, Drogen mit 30 %, 20% Punkte, 10% Delikte. "
+            }
+        ];
+
+        function createButtons() {
+            const questionsList = document.getElementById('questionsList');
+            questionsList.innerHTML = '';
+            qa_data.forEach((item) => {
+                const button = document.createElement('button');
+                button.textContent = item.question;
+                button.onclick = () => showAnswer(item.question);
+                questionsList.appendChild(button);
+            });
+        }
+
+        function showAnswer(question) {
+            const answer = qa_data.find(item => item.question === question).answer;
+            document.getElementById('answerBox').innerHTML = `
+                <h3>${question}</h3>
+                <p>${answer}</p>
+            `;
+        }
+
+        function searchQuestions() {
+            const searchText = document.getElementById('searchBox').value.toLowerCase();
+            const questionsList = document.getElementById('questionsList');
+            questionsList.innerHTML = '';
+            
+            qa_data.forEach(item => {
+                if (item.question.toLowerCase().includes(searchText)) {
+                    const button = document.createElement('button');
+                    button.textContent = item.question;
+                    button.onclick = () => showAnswer(item.question);
+                    questionsList.appendChild(button);
+                }
+            });
+        }
+
+        // Construirea inițială a întrebărilor
+        createButtons();
+    </script>
+</body>
+</html>
